@@ -1,14 +1,11 @@
 var config = require("../config");
 var GHAPI = require("../gh-api").GHAPI;
-//var GitHubApi = require("github");
-
 var Device = require("../models/device").Device;
 var User = require("../models/user").User;
 
 var apns = require("apn");
 
 var _log = function(msg) {
-
   console.log(msg);
 };
 
@@ -45,13 +42,8 @@ function getClientIp(req) {
   return ipAddress;
 };
 
-/*
- * GET home page.
- */
-
 exports.index = function(req, res) {
   render(req, res, "index");
-  //res.end('Hello World');
 };
 
 
@@ -74,7 +66,9 @@ var updateToken = function(req, res, isProduction) {
   Device.findOne({deviceToken: deviceToken}, function(err, device) {
                    if (err) {
                      console.log("ERROR: " + err);
-                     res.end("error");
+                     res.send(500, "error");
+                     res.end();
+                     return;
                    }
                    if (!device) {
                      _log("no device!");
@@ -128,6 +122,7 @@ var channelList = function(req, res, isProduction) {
   getDevicesForChannel(channel, isProduction, function(err, devices) {
                          if (err) {
                            res.end('error! ' + error);
+                           return;
                          }
                          res.end('ok');
                        });
@@ -167,7 +162,8 @@ var doPushChannel = function(channel, message, badge, isProduction, callback) {
   _log("pushing to channel: " + channel);
   getDevicesForChannel(channel, isProduction, function(err, devices) {
     if (err) {
-      callback(err); //res.end("error pushing! " + err);
+      callback(err);
+      return;
     }
     if (devices) {
 
@@ -221,10 +217,10 @@ var doPushChannel = function(channel, message, badge, isProduction, callback) {
       }
 
       apnsConnection.shutdown();
-      callback(null); //res.end('pushed to devices! ' + devices.length);
+      callback(null);
 
     } else {
-      callback(null); //res.end('no devices to push to!');
+      callback(null);
     }
   });
 };
@@ -267,20 +263,6 @@ var getDevicesForChannel = function(channel, isProduction, callback) {
       }
     };
   queryDevices(query, callback);
-
-//   Device.find(query, function(err, devices) {
-//                 if (err) {
-//                   callback(err, null);
-//                 } else if (devices) {
-//                   _log("found some devices! " + devices.length);
-//                   _log(devices);
-//                   callback(null, devices);
-//                 } else {
-//                   callback(null, null);
-//                 }
-
-//               });
-
 };
 
 var queryDevices = function(query, callback) {
@@ -362,9 +344,7 @@ exports.oauth_return = function(req, res) {
       res.end('error: ' + data.error);
       return;
     }
-    //github.authenticate({type: "oauth", "token": data.access_token});
-    //console.log('kicking off get.user');
-    //github.user.get({}, function(err, user) {
+
     ghapi.access_token = data.access_token;
     ghapi.request(ghapi.client.user.get, {}, function(err, user) {
       console.log("got user result: " + JSON.stringify(user));
