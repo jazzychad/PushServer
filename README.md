@@ -1,3 +1,8 @@
+I built PushServer as a way to send push notifications for my new app
+[Letters - a game about spelling
+words](https://itunes.apple.com/us/app/letters-game-about-spelling/id823334911?ls=1&mt=8). Please
+check it out!
+
 # PushServer
 
 A nodejs server that runs on heroku for sending Apple APNS push notifications.
