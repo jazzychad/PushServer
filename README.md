@@ -9,7 +9,7 @@ A nodejs server that runs on heroku for sending Apple APNS push notifications.
 
 Uses mongodb to store device token information and subscribed channel lists.
 
-- Provides API to udpate device tokens for the sandbox and production environments.
+- Provides API to update device tokens for the sandbox and production environments.
 - Provides API to subscribe/unsubscribe devices to/from channels
 - Provices web interface to send push notifications to channels (using
   Github auth for admin login)
