@@ -1,0 +1,22 @@
+div.navbar
+  div.navbar-inner
+    div.container
+      a.btn.btn-navbar(data-toggle="collapse", data-target=".nav-collapse")
+        span.icon-bar
+        span.icon-bar
+        span.icon-bar
+      a.brand(href="/") Letters Push
+      div.nav-collapse
+        ul.nav
+          li
+            a(href="/dashboard") dashboard
+        ul.nav.pull-right
+          li
+            span.userimg
+              img(src="#{user.avatar}", height="24", width="24")
+          li
+            span.user
+              = user.username
+          li.divider-vertical
+          li
+            a(href="/logout") logout

@@ -1,0 +1,38 @@
+html {
+  height: 100%;
+}
+
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  100%;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.control-label {
+  font-size: 1.33em;
+}
+
+/* bootstrap tweaks */
+
+.navbar {
+  margin-bottom: 3.5em;
+}
+
+
+.navbar .nav li span.user {
+  padding: 12.375px 8px 19.375px;
+  display: block;
+  
+  line-height: 1.25em;
+  /*color: #eee;*/
+}
+
+.navbar .nav li span.userimg {
+  padding: 12.375px 8px 5px;
+  display: block;
+  line-height: 1.25em;
+}

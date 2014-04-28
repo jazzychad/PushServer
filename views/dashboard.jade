@@ -1,0 +1,30 @@
+extends index
+
+block navbar
+  include includes/nav_in
+
+block content
+  form.form-horizontal(method="POST", action="/dashboard_push")
+    div.control-group
+      label.control-label Environment
+      div.controls
+        select(name="push_environment")
+          option(value="dev") Dev
+          option(value="prod") Prod
+
+    div.control-group
+      label.control-label Channel
+      div.controls
+        input(type="text", name="push_channel", class="span8", id="push_channel")
+    div.control-group
+      label.control-label Badge
+      div.controls
+        input(type="text", name="push_badge", class="span8", id="push_badge", value="1")
+    div.control-group
+      label.control-label Message
+      div.controls
+        textarea(name="push_message", rows="5", cols="15", class="span8", id="push_message")
+    div.control-group
+      div.controls
+        input.btn.btn-primary(type="submit")
+
