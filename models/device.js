@@ -7,6 +7,7 @@ var DeviceSchema = new Schema({
                                 updatedAt: {type: Date, default: function(){return new Date();}},
                                 channels: {type: Array, index: true},
                                 valid: {type: Boolean, index: true},
+                                invalidatedAt: {type: Date},
                                 production: {type: Boolean, default: function(){return true;}}
 
                         });

@@ -13,7 +13,7 @@
     "connect-mongo": "0.1.9",
     "request": "2.11.1",
     "github": "0.1.8",
-    "apn": "1.5.1"
+    "apn": "1.5.2"
   },
   "engines": {
     "node": "0.10.x",

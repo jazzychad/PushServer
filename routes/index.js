@@ -281,6 +281,63 @@ var queryDevices = function(query, callback) {
               });
 };
 
+//////// feedback service
+
+var startFeedback = function(isProduction) {
+  var connectionOptions = {
+    cert: "certs/apns_" + (isProduction ? "prod" : "dev") + "_cert.pem",
+    key: "certs/apns_" + (isProduction ? "prod" : "dev") + "_key.unencrypted.pem",
+    production: isProduction
+  };
+
+  _log("starting feedback for " + (isProduction ? "prod" : "dev"));
+  var feedbackConnection = apns.Feedback(connectionOptions);
+
+  feedbackConnection.on('feedback', function(feedbackData) {
+    if (feedbackData.length) {
+      _log("got feedback for " + feedbackData.length + " devices!");
+      for (var i in feedbackData) {
+        var data = feedbackData[i];
+
+        var timestamp = data.time;
+        var deviceToken = data.device.toString(); // this is a node-apn Device object
+
+        getDevicesForToken(deviceToken, function(err, deviceObjects) {
+            if (!err && deviceObjects && deviceObjects.length) {
+              _log("got deviceToken: " + deviceToken);
+              var device = deviceObjects[0]; // this is our mongodb Device object
+
+              // check to see if feedback timestamp is newer than our device.updatedAt
+              // if so, mark device as invalid to prevent sending push until marked valid again
+              var updatedAtTimestamp = device.updatedAt.getTime();
+
+              if (timestamp > updatedAtTimestamp) {
+                _log("marking " + deviceToken + " as invalid for " + (isProduction ? "prod" : "dev"));
+                device.valid = false;
+                device.invalidatedAt = new Date(timestamp * 1000);
+                device.save(function(e,d){});
+              }
+            }
+        });
+      }
+    }
+  });
+
+  feedbackConnection.on('error', function(error) {
+    _log("feedback module error! " + error);
+  });
+
+  feedbackConnection.on('feedbackError', function(error) {
+    _log("feedback processing error! " + error);
+  });
+
+};
+
+// start the polling for dev and prod
+startFeedback(false);
+startFeedback(true);
+
+
 //////// web interface
 
 var render = function(req, res, path, opts) {
