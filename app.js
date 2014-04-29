@@ -7,7 +7,8 @@ var express = require('express')
 , MongoStore = require('connect-mongo')(express)
 , routes = require('./routes')
 , config = require('./config')
-, mongoose = require('mongoose');
+, mongoose = require('mongoose')
+, request = require('request');
 
 mongoose.connect(config.mongo_uri || "mongodb://localhost/pushserver_test");
 
@@ -80,6 +81,14 @@ app.get('/login', routes.login);
 app.get('/logout', routes.logout);
 app.get('/oauth/callback', routes.oauth_return);
 
+
+// ping
+// prevents the app from sleeping if running on heroku
+app.get('/ping', function(req, res){console.log('ping');res.end('pong');});
+
+setInterval(function() {
+              request(config.siteurl + "/ping");
+            }, 60000);
 
 var port = process.env.PORT || 3000;
 app.listen(port, function(){

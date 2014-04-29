@@ -1,6 +1,7 @@
 module.exports.admin_userid = process.env.ADMIN_USERID;
 
 module.exports.sitename = process.env.SITENAME;
+module.exports.siteurl = process.env.SITEURL;
 
 module.exports.mongo_uri = process.env.MONGOLAB_URI;
 

@@ -73,6 +73,7 @@ environment if you ran the above heroku addons command.
 
 ```
 export SITENAME="My push server"
+export SITEURL=http://localhost:5000
 export ADMIN_USERID=<your github userid>
 export GH_CONSUMER_KEY=<your github app Client ID>
 export GH_CONSUMER_SECRET=<your github app Client Secret>
@@ -110,7 +111,8 @@ GH_CONSUMER_SECRET=<your github app Client Secret> \
 GH_CALLBACK=http://yourdomain.example.com/oauth/callback \
 ADMIN_USERID=<your github userid> \
 EXPRESS_SESSION_SECRET=<random string> \
-SITENAME="My push server"
+SITENAME="My push server" \
+SITURL=http://yourdomain.example.com
 ```
 
 Push to heroku to deploy
