@@ -1,4 +1,4 @@
-var config = require("../config");
+var config = require("../config/config");
 var GHAPI = require("../gh-api").GHAPI;
 var Device = require("../models/device").Device;
 var User = require("../models/user").User;

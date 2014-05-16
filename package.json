@@ -1,6 +1,7 @@
 {
-  "name": "my-node-app",
-  "version": "0.0.1",
+  "name": "PushServer",
+  "description": "A nodejs server that runs on heroku for sending Apple APNS push notifications",
+  "version": "0.0.2",
   "private": true,
   "dependencies": {
     "express": "3.3.4",
@@ -15,6 +16,7 @@
     "github": "0.1.8",
     "apn": "1.5.2"
   },
+  "main": "server",
   "engines": {
     "node": "0.10.x",
     "npm":  "1.3.x"
